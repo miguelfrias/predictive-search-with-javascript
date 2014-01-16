@@ -36,7 +36,7 @@
                 App.charParser.init(_searchData.text);
                 App.charParser.parse();
 
-                // Update search results data
+                // Update search text
                 _searchData.DOM.exactMatches.innerHTML = _searchData.text;
 
                 // Search for the text globally and insensitive

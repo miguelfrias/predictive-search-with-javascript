@@ -21,15 +21,27 @@
                     App['original-text'] = response.response;
 
                     // Look for Words in order to generate the dataset
-                    var wordsRegex = new RegExp("([a-z]{2,})", 'gmi');
+                    var wordsRegex = new RegExp("([a-z]{2,})", 'gmi'),
+                        words = App['original-text'].match(wordsRegex),
+                        objectDataset = {};
 
-                    var tmp = App['original-text'].match(wordsRegex);
+                    _.each(words, function(value, key, list) {
 
-                    App.dataset = _.map(tmp, function(value, key, list) {
+                        var name = value.toLowerCase();
 
-                        return value.toLowerCase();
+                        if ( objectDataset[name] ) {
+
+                            objectDataset[name] = objectDataset[name] + 1;
+
+                        } else {
+
+                            objectDataset[name] = 1;
+
+                        }
 
                     });
+
+                    App.dataset = objectDataset;
 
                 });
 

@@ -16,6 +16,8 @@
                 'exactMatches': doc.getElementById('number-of-exact-matches')
             };
 
+        searchDOM.input.focus();
+
         App.search.init(searchDOM);
 
     }

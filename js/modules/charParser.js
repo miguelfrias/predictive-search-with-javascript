@@ -76,14 +76,9 @@
 
             var arrayText = _originalText.split(''),
                 textMap = _.map(arrayText, _mapLetter),
-                textToSearch = textMap.join('').split(''),
-                arraySearch = textMap.join('').split('');
+                textToSearch = textMap.join('');
 
-            // console.log(arrayText);
-            // console.log(textMap);
-            // console.log(textToSearch);
-            console.log(arraySearch);
-            console.log(_getCombinations(arraySearch));
+            console.log( textToSearch );
 
         }
 
