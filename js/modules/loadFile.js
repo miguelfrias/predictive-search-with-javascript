@@ -1,4 +1,5 @@
 (function (win, doc) {
+    'use strict';
 
     var App = win.App || {};
 
@@ -15,26 +16,26 @@
         return {
             init: function (file) {
 
-                var cache = _getCache(file);
+                ajax(file, function _handleAjax (response) {
 
-                if (cache) {
+                    App['original-text'] = response.response;
 
-                    App.dataset = cache;
+                    // Look for Words in order to generate the dataset
+                    var wordsRegex = new RegExp("([a-z]{2,})", 'gmi');
 
-                } else {
+                    var tmp = App['original-text'].match(wordsRegex);
 
-                    ajax(file, function _handleAjax (response) {
+                    App.dataset = _.map(tmp, function(value, key, list) {
 
-                        App.dataset = response.response;
-
-                        _setCache(file, response.response);
+                        return value.toLowerCase();
 
                     });
 
-                }
+                });
 
             }
         }
+
     })();
 
     win.App = App;

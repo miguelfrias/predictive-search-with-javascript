@@ -1,24 +1,25 @@
 (function (win, doc) {
+    'use strict';
 
     var App = win.App || {};
 
     App.search = (function () {
 
-        var searchData = {};
+        var _searchData = {};
 
         function _renderResults (matches) {
 
-            _updateExactMatches(searchData.matches.length);
+            _updateExactMatches(_searchData.matches.length);
 
-            var resultsDOM = searchData.DOM.results,
+            var resultsDOM = _searchData.DOM.results,
                 template = _.template("<li><%= text %></li>");
 
-            resultsDOM.innerHTML = template({text: searchData.text});
+            resultsDOM.innerHTML = template({text: _searchData.text});
 
         }
 
-        function _updateExactMatches (nMatches) {
-            searchData.DOM.exactMatches.innerHTML = nMatches;
+        function _updateExactMatches () {
+            _searchData.DOM.exactMatches.innerHTML = _searchData.text;
         }
 
         function _handleSearch (e) {
@@ -27,18 +28,30 @@
 
             e.preventDefault();
 
-            searchData.text = searchData.DOM.input.value;
+            _searchData.text = _searchData.DOM.input.value;
 
-            searchRegExp = new RegExp(searchData.text, 'gi');
+            if (_searchData.text) {
 
-            searchData.matches = App.dataset.match(searchRegExp);
+                // Parser
+                App.charParser.init(_searchData.text);
+                App.charParser.parse();
 
-            if (searchData.matches && searchData.matches.length > 0) {
+                // Update search results data
+                _searchData.DOM.exactMatches.innerHTML = _searchData.text;
 
-                _renderResults(searchData.matches);
+                // Search for the text globally and insensitive
+                // searchRegExp = new RegExp(_searchData.text, 'gi');
+
+                // Search
+                // _searchData.matches = App.dataset.match(searchRegExp);
+
+                // if (_searchData.matches && _searchData.matches.length > 0) {
+
+                //     _renderResults(_searchData.matches);
+
+                // }
 
             }
-
 
         }
 
@@ -46,11 +59,15 @@
 
             init: function (searchDOM) {
 
+                if (!App.charParser) {
+                    throw new Error('charParser is not present!');
+                }
+
                 if (searchDOM) {
 
-                    searchData.DOM = searchDOM;
+                    _searchData.DOM = searchDOM;
 
-                    searchData.DOM.button.addEventListener(
+                    _searchData.DOM.button.addEventListener(
                         'click', 
                         _handleSearch, 
                         false
