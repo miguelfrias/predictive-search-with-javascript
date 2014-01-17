@@ -7,7 +7,8 @@
 
         var App = win.App || {};
 
-        App.loadFile.init('data/alice_in_wonderland.txt');
+        // App.loadFile.init('data/alice_in_wonderland.txt');
+        App.init('data/alice_in_wonderland.txt');
 
         var searchDOM = {
                 'button': doc.getElementById('search-button'),

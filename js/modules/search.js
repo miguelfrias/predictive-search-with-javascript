@@ -44,7 +44,7 @@
                     
                     var keyString = value.join('');
 
-                    console.log(keyString);
+                    // console.log(keyString);
 
                     if (App.dataset[keyString]) {
                         wordsInDataset.push(keyString);
