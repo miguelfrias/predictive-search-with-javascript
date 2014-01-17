@@ -7,24 +7,21 @@
 
         var _searchData = {};
 
-        function _renderResults (matches) {
-
-            _updateExactMatches(_searchData.matches.length);
+        function _renderResults (words) {
 
             var resultsDOM = _searchData.DOM.results,
-                template = _.template("<li><%= text %></li>");
+                list = "<% _.each(words, function(word) { %> <li><%= word %></li> <% }); %>",
+                template = _.template(list, {'words': words});
 
-            resultsDOM.innerHTML = template({text: _searchData.text});
+            resultsDOM.innerHTML = template;
 
-        }
-
-        function _updateExactMatches () {
-            _searchData.DOM.exactMatches.innerHTML = _searchData.text;
         }
 
         function _handleSearch (e) {
 
-            var searchRegExp;
+            var searchRegExp,
+                combinations,
+                wordsInDataset = [];
 
             e.preventDefault();
 
@@ -36,20 +33,30 @@
                 App.charParser.init(_searchData.text);
                 App.charParser.parse();
 
-                // Update search text
+                // Update text that was searched
                 _searchData.DOM.exactMatches.innerHTML = _searchData.text;
 
-                // Search for the text globally and insensitive
-                // searchRegExp = new RegExp(_searchData.text, 'gi');
+                // Get all the posibles combinations
+                combinations = App.charParser.getCombinations();
 
-                // Search
-                // _searchData.matches = App.dataset.match(searchRegExp);
+                // Search if a word is present in the dataset.
+                _.each(combinations, function(value, key, list) {
+                    
+                    var keyString = value.join('');
 
-                // if (_searchData.matches && _searchData.matches.length > 0) {
+                    console.log(keyString);
 
-                //     _renderResults(_searchData.matches);
+                    if (App.dataset[keyString]) {
+                        wordsInDataset.push(keyString);
+                    }
 
-                // }
+                });
+
+                // console.log(wordsInDataset);
+
+                if (wordsInDataset) {
+                    _renderResults(wordsInDataset);
+                }
 
             }
 
