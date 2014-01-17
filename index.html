@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predictive Search</title>
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="container">
+
+    <h1>Search for words in Alice in wonderland</h1>
+    
+    <section class="row">
+        <form action="#" id="search-form" role="form" class="form-inline">
+            <div class="form-group">
+                <input type="text" id="search" class="search">
+                <button type="submit" id="search-button" class="btn btn-primary">Buscar</button>
+            </div>
+        </form>
+    </section>
+
+    <section id="matches" class="matches row">
+        <h3>Exact matches for: <span id="number-of-exact-matches">0</span></h3>
+        <!-- <h3>Prefix matches for: <span id="number-of-prefix-matches">0</span></h3> -->
+    </section>
+
+    <section class="results row" >
+        <ul id="results"></ul>
+    </section>
+
+</div>
+
+<script src="js/libs/underscore-min.js"></script>
+<script src="js/libs/backbone-min.js"></script>
+
+<script src="js/functions.js"></script>
+<script src="js/controllers/app.js"></script>
+<script src="js/modules/initialize.js"></script>
+<script src="js/modules/charParser.js"></script>
+<script src="js/modules/search.js"></script>
+
+    
+</body>
+</html>
